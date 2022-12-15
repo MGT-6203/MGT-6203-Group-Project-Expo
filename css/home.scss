@@ -1,0 +1,83 @@
+@import "_variables";
+@import "_globals";
+@import "_header";
+@import "_footer";
+@import "_mixins";
+@import "_animations";
+
+
+
+
+.title-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    max-width: 60%;
+    max-height: 50%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+}
+
+.content-container{
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+
+
+.canvas-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    
+}
+
+
+.name-title{
+    color: black;
+    text-align: center;
+    font-size: 32px;
+    animation: text-fade 500ms ease-in-out forwards;
+
+}
+
+
+.name-title-container{
+    text-align: center;
+}
+
+
+.description-container{
+    text-align: center;
+    max-width: 75%;
+}
+
+
+.description-content{
+    color: black;
+    text-align: center;
+    font-size: 18px;
+    animation: text-fade 500ms ease-in-out forwards;
+}
+
+
+
+.lead-analytics-bg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: -10px;
+    background-image: url(../icons/original.jpg);
+    background-repeat:repeat-x;
+    background-size: cover; 
+    background-position-x: center;
+    background-position-y: center;
+
+}
