@@ -81,11 +81,20 @@ function GenerateProjectCard(data){
     var card_author_container = document.createElement('div');
     card_author_container.className = 'card-text-container'
 
+    var card_section_container = document.createElement('div');
+    card_section_container.className = 'card-text-container'
+
     var card_author_text = document.createElement('p')
     card_author_text.className = 'card-author'
     card_author_text.innerHTML = '<strong>'+'Team ' + data.GroupNum + '</strong>'+'<br>'+group_names_str
+
+    var card_section_text = document.createElement('p')
+    card_section_text.className = 'card-author'
+    card_section_text.innerHTML = '<strong>'+data.Semester + ', ' + data.Year +'</strong>'
     
     card_author_container.appendChild(card_author_text)
+    card_section_container.appendChild(card_section_text)
+    card_body.appendChild(card_section_container)
     card_body.appendChild(card_author_container)
 
 
@@ -151,6 +160,28 @@ function GenerateAllProjectCards(data){
     return output
 }
 
+function FilterProjectData(data){
+    if((document.getElementById('Spring-2023-Filter').classList.contains('active'))&&(!document.getElementById('Fall-2022-Filter').classList.contains('active'))){
+        var data_filtered = data.filter(function(d){
+            if(d.Semester == "Spring" && d.Year=="2023"){
+                return d;
+            }
+        }
+        )
+    } else if ((!document.getElementById('Spring-2023-Filter').classList.contains('active'))&&(document.getElementById('Fall-2022-Filter').classList.contains('active'))){
+        var data_filtered = data.filter(function(d){
+            if(d.Semester == "Fall" && d.Year=="2022"){
+                return d;
+            }
+        }
+        )
+    } else{
+        var data_filtered = data
+    }
+    return data_filtered
+}
+
+
 ProjectData = d3.csv('./Data/ProjectData/Project_Expo_Data.csv',function(data){
 	return {
     GroupNum: data.GroupNum ,
@@ -164,11 +195,69 @@ ProjectData = d3.csv('./Data/ProjectData/Project_Expo_Data.csv',function(data){
     ProjectDescription: data.ProjectDescription,
     RawYTLink: data.RawYoutubeLink,
     EmbedYTLink: data.EmbedYoutubeLink,
-    ReportPath: data.ReportPath
+    ReportPath: data.ReportPath,
+    Semester: data.Semester,
+    Year: data.Year
 	}
 }).then(function(ProjectData){
-    var project_cards = GenerateAllProjectCards(ProjectData);
+    var ProjectDataFiltered = FilterProjectData(ProjectData);
+    var project_cards = GenerateAllProjectCards(ProjectDataFiltered);
     AppendProjectCards(project_cards);
 }
 
 )
+window.onload = function(){
+    document.getElementById('Fall-2022-Filter').onclick = function() {
+        this.classList.toggle('active');
+        document.getElementById('project-card-container').innerHTML = '';
+        ProjectData = d3.csv('./Data/ProjectData/Project_Expo_Data.csv',function(data){
+            return {
+            GroupNum: data.GroupNum ,
+            Visibility: data.Visibility,
+            Member1Name: data.Member1Name,
+            Member2Name: data.Member2Name,
+            Member3Name: data.Member3Name,
+            Member4Name: data.Member4Name,
+            Member5Name: data.Member5Name,
+            ProjectTitle: data.ProjectTitle,
+            ProjectDescription: data.ProjectDescription,
+            RawYTLink: data.RawYoutubeLink,
+            EmbedYTLink: data.EmbedYoutubeLink,
+            ReportPath: data.ReportPath,
+            Semester: data.Semester,
+            Year: data.Year
+            }
+        }).then(function(ProjectData){
+            var ProjectDataFiltered = FilterProjectData(ProjectData);
+            var project_cards = GenerateAllProjectCards(ProjectDataFiltered);
+            AppendProjectCards(project_cards);
+        })
+
+    }
+    document.getElementById('Spring-2023-Filter').onclick = function() {
+        this.classList.toggle('active');
+        document.getElementById('project-card-container').innerHTML = '';
+        ProjectData = d3.csv('./Data/ProjectData/Project_Expo_Data.csv',function(data){
+            return {
+            GroupNum: data.GroupNum ,
+            Visibility: data.Visibility,
+            Member1Name: data.Member1Name,
+            Member2Name: data.Member2Name,
+            Member3Name: data.Member3Name,
+            Member4Name: data.Member4Name,
+            Member5Name: data.Member5Name,
+            ProjectTitle: data.ProjectTitle,
+            ProjectDescription: data.ProjectDescription,
+            RawYTLink: data.RawYoutubeLink,
+            EmbedYTLink: data.EmbedYoutubeLink,
+            ReportPath: data.ReportPath,
+            Semester: data.Semester,
+            Year: data.Year
+            }
+        }).then(function(ProjectData){
+            var ProjectDataFiltered = FilterProjectData(ProjectData);
+            var project_cards = GenerateAllProjectCards(ProjectDataFiltered);
+            AppendProjectCards(project_cards);
+        })
+    }
+}
