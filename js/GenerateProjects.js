@@ -151,7 +151,7 @@ function GenerateAllProjectCards(data){
     return output
 }
 
-ProjectData = d3.csv('./Data/ProjectData/ProjectExpoData.csv',function(data){
+ProjectData = d3.csv('./Data/ProjectData/Project_Expo_Data.csv',function(data){
 	return {
     GroupNum: data.GroupNum ,
     Visibility: data.Visibility,
